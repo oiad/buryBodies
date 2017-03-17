@@ -7,12 +7,6 @@ Bury and butcher bodies for epoch 1.0.6.1 by salival (https://github.com/oiad)
 * Contains a server side scheduler module to clean up old weapon crates, graves and crosses after 25 minutes.
 * Removes the flies sound when body is buried for performance.
 
-# Install:
-
-* This install basically assumes you have NO custom variables.sqf or compiles.sqf or fn_selfActions.sqf, I would recommend diffmerging where possible.
-
-**[>> Download <<] (https://github.com/oiad/buryBodies/archive/master.zip)**
-
 # REPORTING ERRORS/PROBLEMS
 
 1. Please, if you report issues can you please attach (on pastebin or similar) your CLIENT rpt log file as this helps find out the errors very quickly. To find this logfile:
@@ -20,6 +14,12 @@ Bury and butcher bodies for epoch 1.0.6.1 by salival (https://github.com/oiad)
 	```sqf
 	C:\users\<YOUR WINDOWS USERNAME>\AppData\Local\Arma 2 OA\ArmA2OA.RPT
 	```
+
+# Install:
+
+* This install basically assumes you have NO custom variables.sqf or compiles.sqf or fn_selfActions.sqf, I would recommend diffmerging where possible.
+
+**[>> Download <<] (https://github.com/oiad/buryBodies/archive/master.zip)**
 
 # Mission folder install:
 
