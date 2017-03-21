@@ -1,4 +1,4 @@
-private ["_action","_backPackMag","_backPackWpn","_box","_corpse","_cross","_gain","_humanity","_humanityAmount","_isBury","_grave","_name","_backPack","_position","_sound"];
+private ["_action","_backPackMag","_backPackWpn","_crate","_corpse","_cross","_gain","_humanity","_humanityAmount","_isBury","_grave","_name","_backPack","_position","_sound"];
 
 if (dayz_actionInProgress) exitWith {"You are already performing an action, wait for the current action to finish." call dayz_rollingMessages;};
 dayz_actionInProgress = true;
@@ -21,10 +21,10 @@ _isBury = _action == "bury";
 _position = getPosATL _corpse;
 _backPack = typeOf (unitBackPack _corpse);
 
-_box = createVehicle ["USOrdnanceBox_EP1",_position,[],0,"CAN_COLLIDE"];
-_box setposATL [(_position select 0)+1,(_position select 1)+1.5,_position select 2];
-_box setVariable ["permaLoot",true,true];
-_box setVariable ["bury",true,true];
+_crate = createVehicle ["USOrdnanceBox_EP1",_position,[],0,"CAN_COLLIDE"];
+_crate setposATL [(_position select 0)+1,(_position select 1)+1.5,_position select 2];
+_crate setVariable ["permaLoot",true,true];
+_crate setVariable ["bury",true,true];
 
 _grave = createVehicle ["Grave",_position,[],0,"CAN_COLLIDE"];
 _grave setposATL [(_position select 0)+1,_position select 1,_position select 2];
@@ -37,20 +37,20 @@ if (_isBury) then {
 	_cross setVariable ["bury",true,true];
 };
 
-clearWeaponCargoGlobal _box;
-clearMagazineCargoGlobal _box;
+clearWeaponCargoGlobal _crate;
+clearMagazineCargoGlobal _crate;
 
-{_box addWeaponCargoGlobal [_x, 1]} forEach weapons _corpse;
-{_box addMagazineCargoGlobal [_x ,1]} forEach magazines _corpse;
+{_crate addWeaponCargoGlobal [_x, 1]} forEach weapons _corpse;
+{_crate addMagazineCargoGlobal [_x ,1]} forEach magazines _corpse;
 
 if (_backPack != "") then {
 	_backPackWpn = getWeaponCargo unitBackpack _corpse;
 	_backPackMag = getMagazineCargo unitBackpack _corpse;
 
-	if (count _backPackWpn > 0) then {{_box addWeaponCargoGlobal [_x,(_backPackWpn select 1) select _forEachIndex]} forEach (_backPackWpn select 0);};
-	if (count _backPackMag > 0) then {{_box addMagazineCargoGlobal [_x,(_backPackMag select 1) select _forEachIndex]} forEach (_backPackMag select 0);};
+	if (count _backPackWpn > 0) then {{_crate addWeaponCargoGlobal [_x,(_backPackWpn select 1) select _forEachIndex]} forEach (_backPackWpn select 0);};
+	if (count _backPackMag > 0) then {{_crate addMagazineCargoGlobal [_x,(_backPackMag select 1) select _forEachIndex]} forEach (_backPackMag select 0);};
 
-	_box addBackpackCargoGlobal [_backPack,1];
+	_crate addBackpackCargoGlobal [_backPack,1];
 };
 
 _sound = _corpse getVariable ["sched_co_fliesSource",nil];
