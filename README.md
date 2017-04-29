@@ -19,7 +19,7 @@ Bury and butcher bodies for epoch 1.0.6.1 by salival (https://github.com/oiad)
 
 * This install basically assumes you have NO custom variables.sqf or compiles.sqf or fn_selfActions.sqf, I would recommend diffmerging where possible.
 
-**[>> Download <<] (https://github.com/oiad/buryBodies/archive/master.zip)**
+**[>> Download <<](https://github.com/oiad/buryBodies/archive/master.zip)**
 
 # Mission folder install:
 
