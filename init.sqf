@@ -72,19 +72,22 @@ EpochUseEvents = false; //Enable event scheduler. Define custom scripts in dayz_
 EpochEvents = [["any","any","any","any",30,"crash_spawner"],["any","any","any","any",0,"crash_spawner"],["any","any","any","any",15,"supply_drop"]];
 // EPOCH CONFIG VARIABLES END //
 
-
 diag_log 'dayz_preloadFinished reset';
 dayz_preloadFinished=nil;
 onPreloadStarted "diag_log [diag_tickTime,'onPreloadStarted']; dayz_preloadFinished = false;";
 onPreloadFinished "diag_log [diag_tickTime,'onPreloadFinished']; dayz_preloadFinished = true;";
 with uiNameSpace do {RscDMSLoad=nil;}; // autologon at next logon
 
+_verCheck = (getText (configFile >> "CfgMods" >> "DayZ" >> "version") == "DayZ Epoch 1.0.6.1");
 if (!isDedicated) then {
-	enableSaving [false, false];
-	startLoadingScreen ["","RscDisplayLoadCustom"];
+	enableSaving [false, false];	startLoadingScreen ["","RscDisplayLoadCustom"];
 	progressLoadingScreen 0;
 	dayz_loadScreenMsg = localize 'str_login_missionFile';
-	progress_monitor = [] execVM "\z\addons\dayz_code\system\progress_monitor.sqf";
+	if (_verCheck) then {
+		progress_monitor = [] execVM "DZE_Hotfix_1.0.6.1A\system\progress_monitor.sqf";
+	} else {
+		progress_monitor = [] execVM "\z\addons\dayz_code\system\progress_monitor.sqf";
+	};
 	0 cutText ['','BLACK',0];
 	0 fadeSound 0;
 	0 fadeMusic 0;
@@ -99,11 +102,13 @@ progressLoadingScreen 0.1;
 call compile preprocessFileLineNumbers "\z\addons\dayz_code\medical\setup_functions_med.sqf";
 progressLoadingScreen 0.15;
 call compile preprocessFileLineNumbers "\z\addons\dayz_code\init\compiles.sqf";
+if (_verCheck) then {
+	#include "DZE_Hotfix_1.0.6.1A\init\compiles.sqf"
+};
 call compile preprocessFileLineNumbers "dayz_code\init\compiles.sqf";
 progressLoadingScreen 0.25;
 call compile preprocessFileLineNumbers "server_traders.sqf";
 call compile preprocessFileLineNumbers "\z\addons\dayz_code\system\mission\chernarus11.sqf"; //Add trader city objects locally on every machine early
-if (dayz_POIs && (toLower worldName == "chernarus")) then {call compile preprocessFileLineNumbers "\z\addons\dayz_code\system\mission\chernarus\poi\init.sqf";}; //Add POI objects locally on every machine early
 initialized = true;
 
 setTerrainGrid 25;
@@ -111,6 +116,7 @@ if (dayz_REsec == 1) then {call compile preprocessFileLineNumbers "\z\addons\day
 execVM "\z\addons\dayz_code\system\DynamicWeatherEffects.sqf";
 
 if (isServer) then {
+	if (dayz_POIs && (toLower worldName == "chernarus")) then {call compile preprocessFileLineNumbers "\z\addons\dayz_code\system\mission\chernarus\poi\init.sqf";};
 	call compile preprocessFileLineNumbers "\z\addons\dayz_server\system\dynamic_vehicle.sqf";
 	call compile preprocessFileLineNumbers "\z\addons\dayz_server\system\server_monitor.sqf";
 	execVM "\z\addons\dayz_server\traders\chernarus11.sqf"; //Add trader agents
