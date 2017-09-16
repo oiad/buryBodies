@@ -936,7 +936,7 @@ if (!isNull _cursorTarget && !_inVehicle && !_isPZombie && (player distance _cur
 				player removeAction s_player_bury_human;
 				s_player_bury_human = -1;
 			};
-			if ({_x in ["ItemKnife","ItemKnife5","ItemKnife4","ItemKnife3","ItemKnife2","ItemKnifeBlunt"]} count _itemsPlayer > 0) then {
+			if ({_x in ["ItemKnife","ItemKnife5","ItemKnife4","ItemKnife3","ItemKnife2","ItemKnife1"]} count _itemsPlayer > 0) then {
 				if (s_player_butcher_human < 0) then {
 					s_player_butcher_human = player addAction ["<t color='#0096ff'>Butcher Human</t>","scripts\buryActions.sqf",[_cursorTarget,"butcher"],0,false,true];
 				};
