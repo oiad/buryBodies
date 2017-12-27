@@ -1,6 +1,10 @@
+/*
+	Bury/Butcher body script by salival (https://github.com/oiad)
+*/
+
 private ["_action","_backPackMag","_backPackWpn","_crate","_corpse","_cross","_gain","_humanity","_humanityAmount","_isBury","_grave","_name","_backPack","_position","_sound"];
 
-if (dayz_actionInProgress) exitWith {"You are already performing an action, wait for the current action to finish." call dayz_rollingMessages;};
+if (dayz_actionInProgress) exitWith {localize "str_player_actionslimit" call dayz_rollingMessages;};
 dayz_actionInProgress = true;
 
 _corpse = (_this select 3) select 0;
@@ -12,46 +16,6 @@ player removeAction s_player_butcher_human;
 s_player_butcher_human = -1;
 
 if (isNull _corpse) exitWith {dayz_actionInProgress = false; systemChat "cursorTarget isNull!";};
-
-if (isNil "fn_loopAction") then { // This can be removed when Epoch 1.0.6.2 is released.
-	fn_loopAction = {
-		private ["_action","_extra","_loop","_loops","_started"];
-
-		_action = _this select 0;
-		_loops = _this select 1;
-		_extra = if (count _this > 2) then {_this select 2} else {{false}};
-
-		r_interrupt = false;
-		_started = false;
-		_loop = 0;
-
-		while {_loop < _loops && !r_interrupt && !(call _extra) && (vehicle player == player)} do {
-			if (!_started) then {
-				player playActionNow _action;
-				_started = true;
-			};
-			
-			if ([_action,animationState player] call fnc_inString) then {
-				waitUntil {
-					getNumber(configFile >> "CfgMovesMaleSdr" >> "States" >> (animationState player) >> "disableWeapons") == 0 //Finished or entered a vehicle
-					or r_interrupt or (call _extra)
-				};
-				_loop = _loop + 1;
-				_started = false;
-			};
-			
-			uiSleep 0.1;
-		};
-
-		if (vehicle player == player && (r_interrupt or (call _extra))) then {
-			[objNull, player, rSwitchMove, ""] call RE;
-			player playActionNow "Stop";
-		};
-
-		//Player did not interrupt by moving, entering a vehicle or extra condition
-		(!r_interrupt && !(call _extra) && (vehicle player == player))
-	};
-};
 
 _finished = ["Medic",1] call fn_loopAction;
 if (!_finished) exitWith {dayz_actionInProgress = false;localize "str_epoch_player_26" call dayz_rollingMessages;};
