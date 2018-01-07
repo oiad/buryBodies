@@ -921,7 +921,7 @@ if (!isNull _cursorTarget && !_inVehicle && !_isPZombie && (player distance _cur
 
 	// Custom stuff below
 
-	if (!_isAlive && {!(_cursorTarget isKindOf "zZombie_base")} && {!(_cursorTarget isKindOf "Animal")} && {_canDo} && {_isMan}) then {
+	if (!_isAlive && {!(_cursorTarget isKindOf "zZombie_base")} && {!(_cursorTarget isKindOf "Animal")} && {_isMan}) then {
 		_isButchered = _cursorTarget getVariable ["bodyButchered",false];
 		if (!_isButchered) then {
 			if ("ItemEtool" in _itemsPlayer) then {
@@ -1158,6 +1158,7 @@ if (!isNull _cursorTarget && !_inVehicle && !_isPZombie && (player distance _cur
 	s_player_manageDoor = -1;
 
 	// Custom stuff below
+
 	player removeAction s_player_bury_human;
 	s_player_bury_human = -1;
 	player removeAction s_player_butcher_human;
