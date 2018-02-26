@@ -23,7 +23,7 @@ s_player_butcher_human = -1;
 _position = getPosATL _corpse;
 _isBury = _action == "bury";
 
-if (_notOnRoad && {isOnRoad _position}) exitWith {dayz_actionInProgress = false; format ["You can't %1 a body on the road!",if (_isBury) then {"bury"} else {"butcher"}] call dayz_rollingMessages;};
+if (_notOnRoad && {isOnRoad _position}) exitWith {dayz_actionInProgress = false; format[localize "STR_CL_BA_ROAD",if (_isBury) then {localize "STR_CL_BA_BURY1"} else {"STR_CL_BA_BUTCHER1"}] call dayz_rollingMessages;};
 
 _finished = ["Medic",1] call fn_loopAction;
 if (!_finished) exitWith {dayz_actionInProgress = false;localize "str_epoch_player_26" call dayz_rollingMessages;};
@@ -74,9 +74,9 @@ deleteVehicle _corpse;
 
 if (_isBury) then {
 	if (_name != "unknown") then {
-		format["Rest in peace, %1...",_name] call dayz_rollingMessages;
+		format[localize "STR_CL_BA_RIP",_name] call dayz_rollingMessages;
 	} else {
-		"Rest in peace, unknown soldier...." call dayz_rollingMessages;
+		localize "STR_CL_BA_RIP_UNKNOWN" call dayz_rollingMessages;
 	};
 };
 

@@ -367,10 +367,10 @@ if (!isNull _cursorTarget && !_inVehicle && !_isPZombie && (player distance _cur
 			s_player_boil = -1;
 		};
 	};
-
+	
 	if (_isAlive) then {
 		_restrict = _typeOfCursorTarget in DZE_restrictRemoval;
-	
+
 		//Allow player to remove objects with no ownership or access required
 		if (!_restrict && (_isDestructable || _typeOfCursorTarget in DZE_isWreck || _typeOfCursorTarget in DZE_isWreckBuilding || _typeOfCursorTarget in DZE_isRemovable)) then {
 			if (_hasToolbox && _hasCrowbar) then {
@@ -809,7 +809,7 @@ if (!isNull _cursorTarget && !_inVehicle && !_isPZombie && (player distance _cur
 		if (!_isButchered) then {
 			if ("ItemEtool" in _itemsPlayer) then {
 				if (s_player_bury_human < 0) then {
-					s_player_bury_human = player addAction ["<t color='#0096ff'>Bury Human</t>","scripts\buryActions.sqf",[_cursorTarget,"bury"],0,false,true];
+					s_player_bury_human = player addAction [format["<t color='#0059FF'>%1</t>",localize "STR_CL_BA_BURY"],"scripts\buryActions.sqf",[_cursorTarget,"bury"],0,false,true];
 				}
 			} else {
 				player removeAction s_player_bury_human;
@@ -817,7 +817,7 @@ if (!isNull _cursorTarget && !_inVehicle && !_isPZombie && (player distance _cur
 			};
 			if ({_x in ["ItemKnife","ItemKnife5","ItemKnife4","ItemKnife3","ItemKnife2","ItemKnife1"]} count _itemsPlayer > 0) then {
 				if (s_player_butcher_human < 0) then {
-					s_player_butcher_human = player addAction ["<t color='#0096ff'>Butcher Human</t>","scripts\buryActions.sqf",[_cursorTarget,"butcher"],0,false,true];
+					s_player_butcher_human = player addAction [format["<t color='#0059FF'>%1</t>",localize "STR_CL_BA_BUTCHER"],"scripts\buryActions.sqf",[_cursorTarget,"butcher"],0,false,true];
 				};
 			} else {
 				player removeAction s_player_butcher_human;

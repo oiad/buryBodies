@@ -1,9 +1,9 @@
-# [EPOCH 1.0.6.1] Bury and butcher bodies.
-Bury and butcher bodies for epoch 1.0.6.1 by salival (https://github.com/oiad)
+# [EPOCH 1.0.6.2] Bury and butcher bodies.
+Bury and butcher bodies for epoch 1.0.6.2 by salival (https://github.com/oiad)
 
 * Discussion URL: https://epochmod.com/forum/topic/43501-release-bury-and-butcher-body-for-1061/
 
-* Tested as working on a blank Epoch 1.0.6.1 server
+* Tested as working on a blank Epoch 1.0.6.2 server
 * Contains a server side scheduler module to clean up old weapon crates, graves and crosses after 25 minutes.
 * Removes the flies sound when body is buried for performance.
 
@@ -28,12 +28,16 @@ Bury and butcher bodies for epoch 1.0.6.1 by salival (https://github.com/oiad)
 	```sqf
 	call compile preprocessFileLineNumbers "dayz_code\init\variables.sqf";
 	```
-	
+
 2. In mission\init.sqf find: <code>call compile preprocessFileLineNumbers "\z\addons\dayz_code\init\compiles.sqf";</code> and add directly below:
 
 	```sqf
 	call compile preprocessFileLineNumbers "dayz_code\init\compiles.sqf";
 	```
+
+3. Download the <code>stringTable.xml</code> file linked below from the [Community Localization GitHub](https://github.com/oiad/communityLocalizations) and copy it to your mission folder, it is a community based localization file and contains translations for major community mods including this one.
+
+**[>> Download stringTable.xml <<](https://github.com/oiad/communityLocalizations/blob/master/stringtable.xml)**
 
 # dayz_server install:
 
@@ -51,7 +55,7 @@ Bury and butcher bodies for epoch 1.0.6.1 by salival (https://github.com/oiad)
 	```sqf
 	!=GraveCross1
 	```
-	
+
 	So it will then look like this for example:
 
 	```sqf
