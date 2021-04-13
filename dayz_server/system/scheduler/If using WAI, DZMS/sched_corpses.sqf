@@ -1,5 +1,7 @@
 #include "\z\addons\dayz_server\compile\server_toggle_debug.hpp"
 
+if (isNil "ai_cleanup_time") then {ai_cleanup_time = -1;};
+
 sched_co_deleteVehicle = {
 	private "_group";
 	_this removeAllMPEventHandlers "mpkilled";
@@ -26,7 +28,7 @@ sched_co_deleteVehicle = {
 
 
 sched_corpses = {
-	private ["_delQtyG","_delQtyZ","_delQtyP","_addFlies","_x","_deathTime","_onoff","_delQtyAnimal","_sound","_deathPos","_cpos","_animal","_nearPlayer","_delQtyV"];
+	private ["_delQtyG","_delQtyZ","_delQtyP","_addFlies","_x","_deathTime","_onoff","_delQtyAnimal","_sound","_deathPos","_cpos","_animal","_nearPlayer","_delQtyV","_delQtyAI"];
 	// EVERY 2 MINUTE
 	// DELETE UNCONTROLLED ZOMBIES --- PUT FLIES ON FRESH PLAYER CORPSES --- REMOVE OLD FLIES & CORPSES
 	_delQtyZ = 0;
@@ -34,6 +36,7 @@ sched_corpses = {
 	_delQtyG = 0;
 	_delQtyV = 0;
 	_addFlies = 0;
+	_delQtyAI = 0;
 	{
 		if (local _x && {_x isKindOf "CAManBase"}) then {
 			if (_x isKindOf "zZombie_Base") then {
@@ -59,8 +62,28 @@ sched_corpses = {
 							_addFlies = _addFlies + 1;
 						};
 					};
+					// WAI & DZMS: 60 * ai_cleanup_time = how long a mission AI corpse stays on the map
+					if ((ai_cleanup_time != -1) && (diag_tickTime - _deathTime > (60*ai_cleanup_time)) && (_x getVariable["bodyName",""] == "mission_ai")) then {
+						if (_x getVariable["sched_co_fliesDeleted",false] or !dayz_enableFlies) then {
+							// flies have been switched off, we can delete body
+							_sound = _x getVariable ["sched_co_fliesSource", nil];
+							
+							if !(isNil "_sound") then {
+								detach _sound;
+								deleteVehicle _sound;
+							};
+							
+							_x call sched_co_deleteVehicle;
+							_delQtyAI = _delQtyAI + 1;
+						} else {
+							PVCDZ_flies = [ 0, _x ];
+							publicVariable "PVCDZ_flies";
+							_x setVariable ["sched_co_fliesDeleted", true];
+							// body will be deleted at next round
+						};
+					};
 					// 40 minutes = how long a player corpse stays on the map
-					if (diag_tickTime - _deathTime > 40*60) then {
+					if ((diag_tickTime - _deathTime > 40*60) && (_x getVariable["bodyName",""] != "mission_ai")) then {
 						if (_x getVariable["sched_co_fliesDeleted",false] or !dayz_enableFlies) then {
 							// flies have been switched off, we can delete body
 							_sound = _x getVariable ["sched_co_fliesSource", nil];
@@ -158,8 +181,8 @@ sched_corpses = {
 	
 #ifdef SERVER_DEBUG
 	if (_delQtyZ+_delQtyP+_addFlies+_delQtyGrp+_delQtyG+_delQtyV > 0) then {
-		diag_log format ["%1: Deleted %2 uncontrolled zombies, %3 uncontrolled animals, %4 dead character bodies, %7 ghosts, %8 destroyed vehicles and %5 empty groups. Added %6 flies.",__FILE__,
-		_delQtyZ,_delQtyAnimal,_delQtyP,_delQtyGrp,_addFlies,_delQtyG,_delQtyV];
+		diag_log format ["%1: Deleted %2 uncontrolled zombies, %3 uncontrolled animals, %4 dead character bodies, %7 ghosts, %8 destroyed vehicles, %9 dead mission ai and %5 empty groups. Added %6 flies.",__FILE__,
+		_delQtyZ,_delQtyAnimal,_delQtyP,_delQtyGrp,_addFlies,_delQtyG,_delQtyV,_delQtyAI];
 	};
 #endif
 
