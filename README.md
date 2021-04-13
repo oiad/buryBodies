@@ -1,5 +1,5 @@
 # [EPOCH 1.0.7] Bury and butcher bodies.
-Bury and butcher bodies for epoch 1.0.7 by salival updated by Airwaves Man (https://github.com/oiad)
+Bury and butcher bodies for Epoch 1.0.7 by salival updated by Airwaves Man (https://github.com/oiad)
 
 * Discussion URL: https://epochmod.com/forum/topic/43501-release-bury-and-butcher-body-for-1061/
 
