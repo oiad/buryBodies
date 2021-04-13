@@ -39,7 +39,7 @@ Bury and butcher bodies for epoch 1.0.7 by salival updated by Airwaves Man (http
 			if ("ItemEtool" in _itemsPlayer) then {
 				if (s_player_bury_human < 0) then {
 					s_player_bury_human = player addAction [format["<t color='#0059FF'>%1</t>",localize "STR_CL_BA_BURY"],"scripts\buryActions.sqf",[_cursorTarget,"bury"],0,false,true];
-				}
+				};
 			} else {
 				player removeAction s_player_bury_human;
 				s_player_bury_human = -1;
