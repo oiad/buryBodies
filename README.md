@@ -14,12 +14,23 @@ Bury and butcher bodies for Epoch 1.0.7 by salival updated by Airwaves Man (http
 	```sqf
 	C:\users\<YOUR WINDOWS USERNAME>\AppData\Local\Arma 2 OA\ArmA2OA.RPT
 	```
+	
+# Index:
+
+* [Mission folder install](https://github.com/oiad/buryBodies#mission-folder-install)
+* [dayz_server folder install](https://github.com/oiad/buryBodies#dayz_server-folder-install)
+* [BattlEye filter install](https://github.com/oiad/buryBodies#battleye-filter-install)
+* [Old Releases](https://github.com/oiad/buryBodies#old-releases)	
 
 **[>> Download <<](https://github.com/oiad/buryBodies/archive/master.zip)**
 
 # Install:
 
 * This install basically assumes you have a custom variables.sqf, compiles.sqf and fn_selfActions.sqf.
+
+** If not, visit this repo and follow the steps there**
+https://github.com/AirwavesMan/custom-epoch-functions
+
 
 # Mission folder install:
 
@@ -71,12 +82,14 @@ Bury and butcher bodies for Epoch 1.0.7 by salival updated by Airwaves Man (http
 	player removeAction s_player_butcher_human;
 	s_player_butcher_human = -1;	
 	```
+	
 3. Open your variables.sqf and search for:
 
 	```sqf
 	s_bank_dialog3 = -1;
 	s_player_checkWallet = -1;	
 	```
+	
 	And add this below:
 	
 	```sqf
@@ -84,15 +97,19 @@ Bury and butcher bodies for Epoch 1.0.7 by salival updated by Airwaves Man (http
 	s_player_butcher_human = -1;	
 	```	
 	
-# dayz_server install:
+# dayz_server folder install:
 
 1. Overwrite the following files to your dayz_server folder preserving the directory structure:
+
 	```sqf
 	dayz_server\system\scheduler\sched_corpses.sqf
 	dayz_server\system\scheduler\sched_init.sqf
 	dayz_server\system\scheduler\sched_lootCrates.sqf
 	```
-# Battleye Script.txt filter:
+	
+# BattlEye filter install:
+
+**Battleye scripts.txt:**
 
 1. In your config\<yourServerName>\Battleye\scripts.txt around line 3: <code>5 addBackpack</code> add this to the end of it:
 
@@ -142,7 +159,7 @@ Bury and butcher bodies for Epoch 1.0.7 by salival updated by Airwaves Man (http
 	1 nearEntities <CUT> !="erNear = {isPlayer _x} count (([_corpse] call FNC_GetPos) nearEntities [\"CAManBase\", 10]) > 1;\nif (_playerNear) exitWith {dayz_a"
 	```	
 	
-# Battleye CreateVehicle.txt filter:
+**Battleye createvehicle.txt:**
 
 1. In your config\<yourServerName>\Battleye\createvehicle.txt around line 2 find: <code>5 !(^DZ_|^z_|^pz_|^WeaponHolder|Box|dog|PZombie_VB|^Smoke|^Chem|^._40mm|_DZ$|^Trap)</code> add this to the end of the line:
 
@@ -156,7 +173,10 @@ Bury and butcher bodies for Epoch 1.0.7 by salival updated by Airwaves Man (http
 	5 !(^DZ_|^z_|^pz_|^WeaponHolder|Box|dog|PZombie_VB|^Smoke|^Chem|^._40mm|_DZ$|^Trap) <CUT> !=GraveCross1	
 	```
 	
-**** *For Epoch 1.0.6.2 only* ****
+# Old Releases:
+
+**** *Epoch 1.0.6.2* ****
 **[>> Download <<](https://github.com/oiad/buryBodies/archive/refs/tags/Epoch_1.0.6.2.zip)**
 
-Visit this link: https://github.com/oiad/buryBodies/tree/Epoch_1.0.6.2	
+
+
